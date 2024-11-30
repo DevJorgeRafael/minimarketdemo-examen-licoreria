@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<f:metadata>
+	<f:event listener="#{beanSegLogin.actionVerificarLogin()}"
+		type="preRenderView"></f:event>
+</f:metadata>
+<h:head>
+	<title>Tipos de Licores</title>
+</h:head>
+<body>
+	<p:growl>
+		<p:autoUpdate />
+	</p:growl>
+	<h:form>
+		<p:menubar>
+			<p:menuitem value="Regresar" icon="pi pi-home" action="menu" />
+			<f:facet name="options">
+				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
+					icon="pi pi-user">
+					<p:menuitem value="Perfil" icon="pi pi-cog"></p:menuitem>
+					<p:menuitem value="Cerrar sesión" icon="pi pi-sign-out"
+						action="#{beanSegLogin.actionCerrarSesion()}"></p:menuitem>
+				</p:menuButton>
+			</f:facet>
+		</p:menubar>
+	</h:form>
+	<p:panel>
+		<p:commandButton value="Nuevo" icon="pi pi-plus" id="cmdNuevo"></p:commandButton>
+		<p:overlayPanel for="cmdNuevo" showCloseIcon="true">
+			<h:form>
+                    <p:panelGrid columns="2">
+                        <h:outputText value="Nombre del Tipo de Licor:" />
+                        <p:inputText value="#{beanLicoreria.nuevoTipoLicor.nombreTipo}" required="true"
+                            requiredMessage="Ingrese el nombre del tipo de licor." />
+
+                        <h:outputText value="Descripción del Tipo de Licor:" />
+                        <p:inputText value="#{beanLicoreria.nuevoTipoLicor.descripcion}" required="true"
+                            requiredMessage="Ingrese una descripción del tipo de licor." />
+
+                        <p:commandButton value="Guardar" icon="pi pi-save" action="#{beanLicoreria.actionListenerInsertarTipoLicor()}"
+                            update=":formDatos" />
+                    </p:panelGrid>
+                </h:form>
+		</p:overlayPanel>
+		
+		<h:form id="formDatos">
+                <p:dataTable value="#{beanLicoreria.listaTiposLicores}" var="tipo" emptyMessage="No hay tipos de licor registrados.">
+                    <p:column headerText="Nombre">
+                        <h:outputText value="#{tipo.nombreTipo}" />
+                    </p:column>
+
+                    <p:column headerText="Descripción">
+                        <h:outputText value="#{tipo.descripcion}" />
+                    </p:column>
+
+                    <p:column headerText="Opciones">
+                        <p:commandButton icon="pi pi-pencil" title="Editar" 
+                            actionListener="#{beanLicoreria.actionListenerCargarTipoLicor(tipo)}" 
+                            oncomplete="PF('dialogoEdicion').show()" update=":formEdicion" />
+                        
+                        <p:commandButton icon="pi pi-trash" title="Eliminar" 
+                            styleClass="ui-button-danger" 
+                            actionListener="#{beanLicoreria.actionListenerEliminarTipoLicor(tipo.idLicTiposLicores)}" 
+                            oncomplete="PF('messages').renderMessage({'summary': 'Tipo de Licor eliminado', 'severity': 'info'})" 
+                            update=":formDatos" />
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+	</p:panel>
+	<p:dialog header="Edición de Tipo de Licor" widgetVar="dialogoEdicion">
+            <h:form id="formEdicion">
+                <p:panelGrid columns="2">
+                    <h:outputText value="Nombre del Tipo de Licor:" />
+                    <p:inputText value="#{beanLicoreria.edicionTipoLicor.nombreTipo}" required="true"
+                        requiredMessage="Ingrese el nombre del tipo de licor." />
+
+                    <h:outputText value="Descripción del Tipo de Licor:" />
+                    <p:inputText value="#{beanLicoreria.edicionTipoLicor.descripcion}" required="true"
+                        requiredMessage="Ingrese una descripción del tipo de licor." />
+
+                    <p:commandButton value="Guardar Cambios" icon="pi pi-save" 
+                        action="#{beanLicoreria.actionListenerGuardarEdicionTipoLicor()}" 
+                        update=":formDatos" />
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+		responsive="true" width="350">
+		<p:commandButton value="No" type="button"
+			styleClass="ui-confirmdialog-no ui-button-flat" />
+		<p:commandButton value="Sí" type="button"
+			styleClass="ui-confirmdialog-yes" />
+	</p:confirmDialog>
+</body>
+</html>
