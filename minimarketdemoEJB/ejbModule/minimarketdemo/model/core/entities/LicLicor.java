@@ -11,8 +11,8 @@ import java.math.BigDecimal;
  */
 @Entity
 @Table(name="lic_licores")
-@NamedQuery(name="LicLicore.findAll", query="SELECT l FROM LicLicore l")
-public class LicLicore implements Serializable {
+@NamedQuery(name="LicLicor.findAll", query="SELECT l FROM LicLicor l")
+public class LicLicor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -35,9 +35,9 @@ public class LicLicore implements Serializable {
 	//bi-directional many-to-one association to LicTiposLicore
 	@ManyToOne
 	@JoinColumn(name="id_lic_tipos_licores", nullable=false)
-	private LicTiposLicore licTiposLicore;
+	private LicTiposLicor licTiposLicor;
 
-	public LicLicore() {
+	public LicLicor() {
 	}
 
 	public Integer getIdLicores() {
@@ -80,12 +80,12 @@ public class LicLicore implements Serializable {
 		this.volumen = volumen;
 	}
 
-	public LicTiposLicore getLicTiposLicore() {
-		return this.licTiposLicore;
+	public LicTiposLicor getLicTiposLicor() {
+		return this.licTiposLicor;
 	}
 
-	public void setLicTiposLicore(LicTiposLicore licTiposLicore) {
-		this.licTiposLicore = licTiposLicore;
+	public void setLicTiposLicor(LicTiposLicor licTiposLicor) {
+		this.licTiposLicor = licTiposLicor;
 	}
 
 }

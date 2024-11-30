@@ -11,8 +11,8 @@ import java.util.List;
  */
 @Entity
 @Table(name="lic_tipos_licores")
-@NamedQuery(name="LicTiposLicore.findAll", query="SELECT l FROM LicTiposLicore l")
-public class LicTiposLicore implements Serializable {
+@NamedQuery(name="LicTiposLicore.findAll", query="SELECT l FROM LicTiposLicor l")
+public class LicTiposLicor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -27,10 +27,10 @@ public class LicTiposLicore implements Serializable {
 	private String nombreTipo;
 
 	//bi-directional many-to-one association to LicLicore
-	@OneToMany(mappedBy="licTiposLicore")
-	private List<LicLicore> licLicores;
+	@OneToMany(mappedBy="licTiposLicor")
+	private List<LicLicor> licLicores;
 
-	public LicTiposLicore() {
+	public LicTiposLicor() {
 	}
 
 	public Integer getIdLicTiposLicores() {
@@ -57,26 +57,26 @@ public class LicTiposLicore implements Serializable {
 		this.nombreTipo = nombreTipo;
 	}
 
-	public List<LicLicore> getLicLicores() {
+	public List<LicLicor> getLicLicores() {
 		return this.licLicores;
 	}
 
-	public void setLicLicores(List<LicLicore> licLicores) {
+	public void setLicLicores(List<LicLicor> licLicores) {
 		this.licLicores = licLicores;
 	}
 
-	public LicLicore addLicLicore(LicLicore licLicore) {
+	public LicLicor addLicLicore(LicLicor licLicore) {
 		getLicLicores().add(licLicore);
-		licLicore.setLicTiposLicore(this);
+		licLicore.setLicTiposLicor(this);
 
 		return licLicore;
 	}
 
-	public LicLicore removeLicLicore(LicLicore licLicore) {
-		getLicLicores().remove(licLicore);
-		licLicore.setLicTiposLicore(null);
+	public LicLicor removeLicLicore(LicLicor licLicor) {
+		getLicLicores().remove(licLicor);
+		licLicor.setLicTiposLicor(null);
 
-		return licLicore;
+		return licLicor;
 	}
 
 }
